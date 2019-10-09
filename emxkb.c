@@ -20,6 +20,7 @@
 
 int    lock_group(int window_id, int group);
 int    send_key_to_emacs(Display *display, int window_id, int group);
+int    send_std_key_to_emacs(Display *display, int window_id, int group);
 Window get_client(Display *display, Window w);
 int    fprintf_return_error(int return_code, const char *message);
 
@@ -117,18 +118,24 @@ int send_key_to_emacs(Display *display, int window_id, int group)
     event.window  = window_id;
     event.display = display;
     event.root    = RootWindow(display, DefaultScreen(display));
-    event.state   = 0;
-    event.keycode = XKeysymToKeycode(display, XStringToKeysym("space"));
+    /* event.state   = 0; */
+    /* event.keycode = XKeysymToKeycode(display, XStringToKeysym("space")); */
+    event.state = ControlMask;
+
+    /* event.state   = ControlMask; */
+    /* event.keycode = XKeysymToKeycode(display, XStringToKeysym("backslash")); */
 
     switch (group)
     {
     case 0:
-        event.state = Mod4Mask;
+        /* event.state = Mod4Mask; */
         /* event.keycode = XKeysymToKeycode(display, XStringToKeysym("F31")); */
+        event.keycode = XKeysymToKeycode(display, XStringToKeysym("1"));
         break;
     case 1:
-        event.state = Mod3Mask;
+        /* event.state = Mod3Mask; */
         /* event.keycode = XKeysymToKeycode(display, XStringToKeysym("F32")); */
+        event.keycode = XKeysymToKeycode(display, XStringToKeysym("2"));
         break;
     default:
         event.state = Mod4Mask;
